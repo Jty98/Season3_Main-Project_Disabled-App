@@ -44,9 +44,9 @@ dependencies:
   # 그래프 및 차트 그리기
   fl_chart: ^0.64.0
   # firebase
-  firebase_storage: ^11.2.5
-  cloud_firestore: ^4.8.4
-  firebase_core: ^2.17.0
+  firebase_storage: ^11.6.0
+  cloud_firestore: ^4.14.0
+  firebase_core: ^2.24.2
   # gesture 기능 풍부하게
   simple_gesture_detector: ^0.2.0
   # modal 기능

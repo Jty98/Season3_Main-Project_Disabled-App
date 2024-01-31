@@ -11,7 +11,7 @@ class AiLocationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AddressController controller = Get.find<AddressController>();
+    final AddressController controller = Get.put(AddressController());
 
     return AlertDialog(
       title: const Text(
@@ -70,7 +70,7 @@ class AiLocationWidget extends StatelessWidget {
                                   controller.selectedAddress.value = address;
                                   controller.addressResult111 = "";
                                   controller.subAddressResult111 = "";
-                                  controller.subAddresses1Result = "";
+                                  controller.subAddresses1Result.value = "";
                                   controller.loadSubAddresses(address.code);
                                   controller.address(address.name);
                                   controller.update();

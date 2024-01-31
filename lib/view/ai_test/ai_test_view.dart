@@ -108,31 +108,30 @@ class _AiTestViewState extends State<AiTestView> {
                             height: 20,
                           ),
                           ElevatedButton(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return const AiLocationWidget();
-                                },
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(),
-                            child: const Text(
-                              '근무지역 선택하기',
-                              style: TextStyle(
-                                  fontSize: 22, fontWeight: FontWeight.bold),
-                            )
-                          ),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return const AiLocationWidget();
+                                  },
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(),
+                              child: const Text(
+                                '근무지역 선택하기',
+                                style: TextStyle(
+                                    fontSize: 22, fontWeight: FontWeight.bold),
+                              )),
                           const SizedBox(
                             height: 20,
                           ),
                           Text(
-                              "${_controller.addressResult} ${_controller.subAddressResult} ${_controller.subAddresses1Result}",
-                              style: const TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 16,
-                              ),
-                              ),
+                            "${_controller.addressResult} ${_controller.subAddressResult} ${_controller.subAddresses1Result}",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 16,
+                            ),
+                          ),
                           const SizedBox(
                             width: 350,
                             child: Divider(
@@ -155,7 +154,6 @@ class _AiTestViewState extends State<AiTestView> {
                           TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  
                   AgreementViewWidget(
                     agreement: Agreement.personalCollection,
                     height: 100.h,
@@ -206,11 +204,12 @@ class _AiTestViewState extends State<AiTestView> {
                               Get.to(const AiTestViewJobSelect());
                             }
                           : null,
-                      child: const Text('희망 직업선택',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      child: const Text(
+                        '희망 직업선택',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),

@@ -11,7 +11,7 @@ class AiLocationTextWidget extends StatelessWidget {
 
     String address1 = controller.addressResult111;
     String address2 = controller.subAddressResult111;
-    String address3 = controller.subAddresses1Result;
+    String address3 = controller.subAddresses1Result.value;
 
     return GetBuilder<AddressController>(
       builder: (controller) {

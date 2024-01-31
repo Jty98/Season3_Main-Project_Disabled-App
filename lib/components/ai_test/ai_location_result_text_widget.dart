@@ -10,9 +10,12 @@ class AiLocationResultTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<AddressController>(
       builder: (controller) {
+    // String adress1 = controller.addressResult ?? controller.userData!.address;
+    // String adress2 = controller.subAddressResult ?? controller.userData!.address;
+    // String adress3 = controller.subAddresses1Result ?? controller.userData!.address;
         return Center(
           child: Text(
-            "${controller.addressResult} ${controller.subAddressResult} ${controller.subAddresses1Result}",
+            "${controller.addresses} ${controller.subAddresses} ${controller.subAddresses1}",
             style: const TextStyle(
               fontWeight: FontWeight.normal,
               fontSize: 16,

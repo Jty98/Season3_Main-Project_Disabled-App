@@ -29,8 +29,8 @@ class AiTestController extends GetxController {
   late int? manAge;
 
   @override
-  void onInit() {
-    loadUser();
+  void onInit() async {
+    await loadUser();
     _updateAge();
     super.onInit();
     manAge = age();
@@ -71,6 +71,7 @@ class AiTestController extends GetxController {
       try {
         var response = await GetConnect().get(requestUri);
         if (response.isOk) {
+          print(response.body);
           userData = UserData.fromJson(response.body);
           update();
           return true;

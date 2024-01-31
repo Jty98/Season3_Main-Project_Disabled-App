@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/components/login/agreement_view.dart';
 import 'package:season3_team1_mainproject/util/agreement.dart';
 import 'package:season3_team1_mainproject/view/appbar/myappbar.dart';
+import 'package:season3_team1_mainproject/vm/ai_test/ai_address_controller.dart';
 import '../../components/ai_test/ai_employ_day_widget.dart';
 import '../../components/ai_test/ai_location_result_text_widget.dart';
 import '../../components/ai_test/ai_location_widget.dart';
@@ -21,6 +22,7 @@ class AiTestViewLoadUser extends StatefulWidget {
 class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
   final AiTestController tController = Get.put(AiTestController());
   final LoginController loginController = Get.find<LoginController>();
+  final AddressController addressController = Get.put(AddressController());
 
   bool okChecked = false;
   bool noChecked = false;
@@ -60,210 +62,8 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
     return Scaffold(
       appBar: const MyAppBar(),
       body: SingleChildScrollView(
-        child: GetBuilder<AiTestController>(
-          builder: (controller) {
-            if (controller.userData != null) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    const Text(
-                      '성별',
-                      style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      tController.userData!.gender == "남자"
-                          ? tController.userData!.gender = "남성"
-                          : tController.userData!.gender = "여성",
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.normal),
-                    ),
-                    const SizedBox(
-                      width: 350,
-                      child: Divider(
-                        color: Colors.grey,
-                        thickness: 1.0,
-                      ),
-                    ),
-                    const Text(
-                      '생년월일',
-                      style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "$userYear 년 $userMonth 월 $userDay 일생",
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.normal),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 350,
-                      child: Divider(
-                        color: Colors.grey,
-                        thickness: 1.0,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          const Text(
-                            '장애유형',
-                            style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            tController.userData!.disability,
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.normal),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 350,
-                      child: Divider(
-                        color: Colors.grey,
-                        thickness: 1.0,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          const Text(
-                            '희망 취업일자',
-                            style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold),
-                          ),
-                          AiEmployDayWidget(
-                            onEmploySelected: _employSelected,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          const Text(
-                            '희망 근무지역',
-                            style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return const AiLocationWidget();
-                                },
-                              );
-                            },
-                            child: const Text(
-                              '근무지역 선택하기',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          const AiLocationResultTextWidget(),
-                          const SizedBox(
-                            width: 350,
-                            child: Divider(
-                              color: Colors.grey,
-                              thickness: 1.0,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        '이용약관',
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    AgreementViewWidget(
-                      agreement: Agreement.personalCollection,
-                      height: 100.h,
-                    ),
-                    AgreementViewWidget(
-                      agreement: Agreement.personalUseage,
-                      height: 100.h,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('※ 동의시에만 검사가 가능합니다'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Row(
-                            children: [
-                              Checkbox(
-                                value: okChecked,
-                                onChanged: (value) => _checkboxGroup(value!),
-                              ),
-                              const Text('동의'),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Checkbox(
-                                value: noChecked,
-                                onChanged: (value) {
-                                  // 두 번째 체크박스를 선택하면 첫 번째 체크박스와 반대로 설정
-                                  _checkboxGroup(!value!);
-                                },
-                              ),
-                              const Text('비동의'),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      // 동의에 체크 돼있어야지 검사 시작 가능
-                      child: ElevatedButton(
-                        onPressed: okChecked
-                            ? () {
-                                tController.age.value = age();
-                                disabledSelect();
-
-                                Get.to(const AiTestViewJobSelect());
-                              }
-                            : null,
-                        child: const Text(
-                          '희망 직업선택',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 60,
-                    ),
-                  ],
-                ),
-              );
-            } else {
-              return SizedBox(
+        child: tController.userData == null
+            ? SizedBox(
                 height: 690.h,
                 child: const Center(
                   child: Column(
@@ -273,10 +73,229 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
                     ],
                   ),
                 ),
-              );
-            }
-          },
-        ),
+              )
+            : GetBuilder<AiTestController>(
+                builder: (controller) {
+                  if (controller.userData != null) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          const Text(
+                            '성별',
+                            style: TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            controller.userData!.gender == "남자"
+                                ? controller.userData!.gender = "남성"
+                                : controller.userData!.gender = "여성",
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.normal),
+                          ),
+                          const SizedBox(
+                            width: 350,
+                            child: Divider(
+                              color: Colors.grey,
+                              thickness: 1.0,
+                            ),
+                          ),
+                          const Text(
+                            '생년월일',
+                            style: TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.bold),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "$userYear 년 $userMonth 월 $userDay 일생",
+                              style: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.normal),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 350,
+                            child: Divider(
+                              color: Colors.grey,
+                              thickness: 1.0,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                const Text(
+                                  '장애유형',
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  controller.userData!.disability,
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 350,
+                            child: Divider(
+                              color: Colors.grey,
+                              thickness: 1.0,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                const Text(
+                                  '희망 취업일자',
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                AiEmployDayWidget(
+                                  onEmploySelected: _employSelected,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                const Text(
+                                  '희망 근무지역',
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return const AiLocationWidget();
+                                      },
+                                    );
+                                  },
+                                  child: const Text(
+                                    '근무지역 선택하기',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                // const AiLocationResultTextWidget(),
+                                Obx(
+                                  () => Text(
+                                    "${addressController.addressResult.value} ${addressController.subAddressResult.value} ${addressController.subAddresses1Result.value}",
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+
+                                const SizedBox(
+                                  width: 350,
+                                  child: Divider(
+                                    color: Colors.grey,
+                                    thickness: 1.0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 50,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              '이용약관',
+                              style: TextStyle(
+                                  fontSize: 22, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          AgreementViewWidget(
+                            agreement: Agreement.personalCollection,
+                            height: 100.h,
+                          ),
+                          AgreementViewWidget(
+                            agreement: Agreement.personalUseage,
+                            height: 100.h,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text('※ 동의시에만 검사가 가능합니다'),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Row(
+                                  children: [
+                                    Checkbox(
+                                      value: okChecked,
+                                      onChanged: (value) =>
+                                          _checkboxGroup(value!),
+                                    ),
+                                    const Text('동의'),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Checkbox(
+                                      value: noChecked,
+                                      onChanged: (value) {
+                                        // 두 번째 체크박스를 선택하면 첫 번째 체크박스와 반대로 설정
+                                        _checkboxGroup(!value!);
+                                      },
+                                    ),
+                                    const Text('비동의'),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            // 동의에 체크 돼있어야지 검사 시작 가능
+                            child: ElevatedButton(
+                              onPressed: okChecked
+                                  ? () {
+                                      controller.age.value = age();
+                                      disabledSelect();
+
+                                      Get.to(const AiTestViewJobSelect());
+                                    }
+                                  : null,
+                              child: const Text(
+                                '희망 직업선택',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 60,
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                  return Container();
+                },
+              ),
       ),
     );
   }

@@ -45,10 +45,12 @@ class UserData {
       latitude: json['latitude'].toDouble(),
       longitude: json['longitude'].toDouble(),
       birth: json['birth'],
-      kakaoid: json['kakaoid'],
-      googleid: json['googleid'],
+      kakaoid: json['kakaoid'] ?? "",
+      googleid: json['googleid'] ?? "",
     );
   }
+
+
 
   Map<String, dynamic> toJson() {
     return {

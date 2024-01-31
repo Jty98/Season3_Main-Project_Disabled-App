@@ -16,7 +16,12 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(); // .env 파일 로드
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+   // 이미 초기화된 Firebase 앱이 없다면 초기화
+  if (Firebase.apps.isEmpty) {
+    await Firebase.initializeApp(
+      // options: DefaultFirebaseOptions.currentPlatform
+      );
+  }
 
   Get.put(HomeController());
   Get.put(LoginController());

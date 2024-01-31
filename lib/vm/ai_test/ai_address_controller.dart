@@ -24,40 +24,42 @@ class AddressController extends GetxController {
   final subAddresses = <AddressDepthServerModel>[].obs;
   final subAddresses1 = <AddressDepthServerModel>[].obs;
   final selectedAddress = AddressDepthServerModel(code: '', name: '').obs;
-  String addressResult = "";
-  String subAddressResult = "";
-  String subAddresses1Result = "";
+  // 다이얼로그에서 선택하면 화면에 뜨는 시, 군, 동 텍스트
+  RxString addressResult = "".obs;
+  RxString subAddressResult = "".obs;
+  RxString subAddresses1Result = "".obs;
+
+  // 다이얼로그에 업데이트되는 시, 군, 텍스트
   String addressResult111 = "";
   String subAddressResult111 = "";
-  // String subAddresses1_result111 = "";
   bool addressStatus = false;
 
   // get userData => null;
 
   @override
-  void onInit() {
+  void onInit() async {
+    await fetchAddresses(); // 시 데이터 처음에 보여주기위해 init에 넣기
+    await loadUser();
     super.onInit();
-    fetchAddresses(); // 시 데이터 처음에 보여주기위해 init에 넣기
-    loadUser();
   }
 
   /// 시 데이터 넘겨주기
   void address(String address) {
-    addressResult = address;
+    addressResult.value = address;
     addressResult111 = "$address >";
     update();
   }
 
   // 구 데이터 넘겨주기
   void subAddressesR(String subAddresses) {
-    subAddressResult = subAddresses;
+    subAddressResult.value = subAddresses;
     subAddressResult111 = "$subAddresses >";
     update();
   }
 
   // 동 데이터 넘겨주기
   void subAddresses1R(String subAddresses1) {
-    subAddresses1Result = subAddresses1;
+    subAddresses1Result.value = subAddresses1;
     update();
   }
 
@@ -165,8 +167,10 @@ class AddressController extends GetxController {
       String requestUri = "$baseUrl/?id=$userId";
       try {
         var response = await GetConnect().get(requestUri);
+        print(response.statusCode);
         if (response.isOk) {
           userData = UserData.fromJson(response.body);
+          print("userData: ${userData!.address}");
           update();
           return true;
         } else {
